@@ -11,7 +11,6 @@ const SearchContents = () => {
   );
 
   const menuToggle = useSelector((store) => store.movie.menuToggle);
-  console.log(menuToggle);
   return (
     <div className="bg-black text-white">
       {profileMenuToggle && <ProfileMenu />}

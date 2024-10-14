@@ -37,7 +37,6 @@ router.post("/edit", isLoggedIn, upload.single("file"), async (req, res) => {
     });
   }
   try {
-    console.log("entered");
     const updatedUser = await userModel.findOneAndUpdate(
       { _id: req.user.userId },
       { fullname, email, picture: req.file.filename },
@@ -66,6 +65,7 @@ router.post("/edit", isLoggedIn, upload.single("file"), async (req, res) => {
 router.post("/addtowatchlist", isLoggedIn, async (req, res) => {
   try {
     const { id } = req.body;
+    const { contentType } = req.body;
     if (!id) {
       return res.status(401).json({
         success: "false",
@@ -79,11 +79,11 @@ router.post("/addtowatchlist", isLoggedIn, async (req, res) => {
         message: "User not found",
       });
     }
-    user.watchlist.push(id);
+    user.watchlist.push({ id, contentType });
     await user.save();
     return res.status(201).json({
       success: true,
-      message: "Movie added to watchlist",
+      message: `${contentType} added to watchlist`,
     });
   } catch (err) {
     console.log(err.message);
@@ -97,6 +97,8 @@ router.post("/addtowatchlist", isLoggedIn, async (req, res) => {
 router.post("/deletefromwatchlist", isLoggedIn, async (req, res) => {
   try {
     const { id } = req.body;
+    const { contentType } = req.body;
+
     if (!id) {
       return res.status(401).json({
         success: "false",
@@ -111,18 +113,20 @@ router.post("/deletefromwatchlist", isLoggedIn, async (req, res) => {
       });
     }
 
-    const index = user.watchlist.indexOf(id);
+    const index = user.watchlist.findIndex(
+      (item) => item.id === id && item.contentType === contentType
+    );
     if (index > -1) {
       user.watchlist.splice(index, 1);
       await user.save();
       return res.status(201).json({
         success: true,
-        message: "Movie removed from Watchlist",
+        message: `${contentType} removed from Watchlist`,
       });
     } else {
       return res.status(404).json({
-        success: "false",
-        message: "Movie not Found in Watchlist",
+        success: false,
+        message: `${contentType} not Found in Watchlist`,
       });
     }
   } catch (err) {

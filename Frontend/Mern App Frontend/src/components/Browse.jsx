@@ -24,8 +24,13 @@ const Browse = () => {
   );
   const menuToggle = useSelector((store) => store.movie.menuToggle);
 
-  console.log(menuToggle);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  });
 
   //my custom hooks
   useNowPlayingMovies();
@@ -35,15 +40,9 @@ const Browse = () => {
   useBackdropImages();
   fetchWatchlist(dispatch);
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-    }
-  });
-
   return (
     <div className="bg-black h-auto w-full  text-white relative">
-      <Header buttonName={"Logout"} />
+      <Header />
       {profileMenuToggle && <ProfileMenu />}
       {menuToggle && <Menu />}
       <Carousel interval={5000} />

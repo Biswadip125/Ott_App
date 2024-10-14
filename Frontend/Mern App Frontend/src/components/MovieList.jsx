@@ -25,15 +25,19 @@ const MovieList = ({ title, movies }) => {
   };
   return (
     <div
-      className="relative"
+      className={`relative ${location.pathname === "/search" ? "mt-5" : ""}`}
       onMouseEnter={() => setShowArrows(true)}
       onMouseLeave={() => setShowArrows(false)}
     >
-      <h1 className="text-[26px] ml-2 py-2 mb-2 overflow-hidden font-bold">
+      <h1
+        className={`md:text-[26px] text-[16px] ml-2 py-2 pt-2 mt-2 ${
+          location.pathname.includes("/watch") ? "mb-0" : "mb-2"
+        } overflow-hidden font-bold ${title ? "block" : "hidden"}`}
+      >
         {title && title}
       </h1>
       <div
-        className=" flex overflow-x-auto no-scrollbar cursor-pointer relative"
+        className=" flex overflow-x-auto no-scrollbar  cursor-pointer relative"
         ref={sliderRef}
       >
         <div className="flex items-center ">
@@ -45,7 +49,7 @@ const MovieList = ({ title, movies }) => {
       {showArrows && (
         <>
           <button
-            className="absolute top-1/2 -translate-y-1/4 left-5 md:left-15 flex items-center justify-center size-12 rounded-full bg-red-600 bg-opacity-50 hover:bg-opacity-85 text-white z-10 "
+            className="absolute top-1/2 -translate-y-1/4 left-5 md:left-15 md:flex hidden items-center justify-center size-12 rounded-full bg-red-600 bg-opacity-50 hover:bg-opacity-85 text-white z-10 "
             onClick={(e) => {
               e.stopPropagation();
               scrollLeft();
@@ -54,7 +58,7 @@ const MovieList = ({ title, movies }) => {
             <GrPrevious size={20} />
           </button>
           <button
-            className="absolute top-1/2 -translate-y-1/4 right-5 md:right-15 flex items-center justify-center size-12 rounded-full bg-red-600 bg-opacity-50 hover:bg-opacity-85 text-white z-10"
+            className="absolute top-1/2 -translate-y-1/4 right-5 md:right-15 md:flex hidden items-center justify-center size-12 rounded-full bg-red-600 bg-opacity-50 hover:bg-opacity-85 text-white z-10"
             onClick={(e) => {
               e.stopPropagation();
               scrollRight();

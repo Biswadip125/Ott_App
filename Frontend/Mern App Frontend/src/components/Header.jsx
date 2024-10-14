@@ -51,14 +51,14 @@ const Header = ({ buttonName, link }) => {
     <>
       <header
         id="header"
-        className="fixed w-full z-30 transition duration-300 ease-in-out bg-gradient-to-b from-black"
+        className="fixed w-full z-30 transition duration-300 ease-in-out bg-gradient-to-b from-black to-transpare"
       >
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="text-2xl font-bold">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
               alt="Netflix"
-              class="h-8"
+              className="md:h-8 h-5"
             />
           </div>
           {user && !hideNavOnRoutes.includes(location.pathname) && (
@@ -69,16 +69,22 @@ const Header = ({ buttonName, link }) => {
               >
                 Movies
               </a>
-              <a href="#" className="text-gray-300 hover:text-white transition">
+              <a
+                href="/tvshows"
+                className="text-gray-300 hover:text-white transition"
+              >
                 TV Shows
               </a>
-              <a href="#" className="text-gray-300 hover:text-white transition">
+              <a
+                href="/watchlist"
+                className="text-gray-300 hover:text-white transition"
+              >
                 Watchlist
               </a>
             </nav>
           )}
           {user && !hideNavOnRoutes.includes(location.pathname) ? (
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 ">
               <Link onClick={toggleHandler} to={"/search"}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +102,7 @@ const Header = ({ buttonName, link }) => {
                 </svg>
               </Link>
 
-              <button>
+              <button className="border-4 border-transparent hover:border-gray-500/50 rounded-full">
                 <img
                   src={`${BACKEND_IMAGE_URL}/${user.picture}`}
                   alt="Profile"
@@ -108,16 +114,18 @@ const Header = ({ buttonName, link }) => {
                 <LuLogOut size={25} color={"white"} />
               </button>
               <button className="block md:hidden " onClick={menuToggleHandler}>
-                <IoMenu size={25} />
+                <IoMenu size={25} color={"white"} />
               </button>
             </div>
           ) : (
-            <a
-              className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 text-center cursor-pointer"
-              href={link}
-            >
-              {buttonName}
-            </a>
+            <div className="flex justify-center items-center">
+              <Link
+                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 md:w-[104px] w-20 md:h-[12] font-medium rounded-lg md:text-lg md:px-3 px-2 md:py-2.5 py-2 text-sm   dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 cursor-pointer text-center"
+                to={link}
+              >
+                {buttonName}
+              </Link>
+            </div>
           )}
         </div>
       </header>

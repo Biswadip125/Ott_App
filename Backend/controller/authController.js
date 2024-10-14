@@ -19,7 +19,6 @@ module.exports.registerUser = async (req, res) => {
         .json({ message: "User already exists", success: "false" });
     }
     bcrypt.genSalt(10, (err, salt) => {
-      console.log(salt);
       bcrypt.hash(password, salt, async (err, hash) => {
         if (err) return res.send(err.message);
         let user = await userModel.create({

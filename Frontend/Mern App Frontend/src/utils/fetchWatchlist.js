@@ -10,7 +10,7 @@ export const fetchWatchlist = async (dispatch) => {
       },
       withCredentials: true,
     });
-    console.log(res);
+
     if (res.data.success) {
       dispatch(setWatchlist(res.data.watchlist));
     }

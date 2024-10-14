@@ -5,7 +5,6 @@ const crypto = require("crypto");
 //diskstorage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    console.log("destination function called");
     cb(null, path.join("./public/images"));
   },
   filename: function (req, file, cb) {
@@ -13,7 +12,7 @@ const storage = multer.diskStorage({
       if (err) {
         console.log(err);
       }
-      console.log("filename function called", file.originalname);
+
       const fn = name.toString("hex") + path.extname(file.originalname);
       cb(null, fn);
     });

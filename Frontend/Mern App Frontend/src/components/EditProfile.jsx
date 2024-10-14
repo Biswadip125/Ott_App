@@ -1,24 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
-import ProfileMenu from "./profileMenu";
+import ProfileMenu from "./ProfileMenu";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { API_END_POINT } from "../utils/constant";
 import toast from "react-hot-toast";
 import { setUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
+import Menu from "./Menu";
 
 const EditProfile = () => {
   const user = useSelector((store) => store.app.user);
-  console.log(user);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  });
   const profileMenuToggle = useSelector(
     (store) => store.movie.profileMenuToggle
   );
+
+  const menuToggle = useSelector((store) => store.movie.menuToggle);
+
   const [fullname, setFullName] = useState(user.fullname);
   const [email, setEmail] = useState(user.email);
   const [file, setFile] = useState();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const uploadFile = async (e) => {
     e.preventDefault();
@@ -36,7 +46,7 @@ const EditProfile = () => {
         },
         withCredentials: true,
       });
-      console.log(res);
+
       if (res.data.success) {
         dispatch(setUser(res.data.updatedUser));
         toast.success(res.data.message);
@@ -51,7 +61,8 @@ const EditProfile = () => {
     <>
       <Header />
       {profileMenuToggle && <ProfileMenu />}
-      <div className="w-full h-screen p-20 bg-black/90 text-white">
+      {menuToggle && <Menu />}
+      <div className="w-full h-screen pt-20 md:pl-20 md:pr-20 pl-10 pr-10  bg-black/90 text-white">
         <div className="p-4">
           <h1 className="text-3xl">Edit User Details</h1>
           <hr className="w-full border-1 border-t-white-500" />
@@ -65,7 +76,6 @@ const EditProfile = () => {
                 className="mt-2 bg-transparent  "
                 onChange={(e) => {
                   setFile(e.target.files[0]);
-                  console.log(e);
                 }}
               />
             </div>

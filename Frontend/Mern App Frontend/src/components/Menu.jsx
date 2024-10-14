@@ -28,11 +28,19 @@ const Menu = () => {
         </Link>
         <hr className="w-full border-1 border-t-gray-500/70" />
 
-        <Link className=" h-16 pl-4 pt-2  flex items-center text-red-600">
+        <Link
+          className=" h-16 pl-4 pt-2  flex items-center text-red-600"
+          to={"/tvshows"}
+          onClick={cancelMenuHandler}
+        >
           TV Shows
         </Link>
         <hr className="w-full border-1 border-t-gray-500/70" />
-        <Link className=" h-16 pl-4 pt-2  flex items-center text-red-600">
+        <Link
+          className=" h-16 pl-4 pt-2  flex items-center text-red-600"
+          to={"/watchlist"}
+          onClick={cancelMenuHandler}
+        >
           Watchlist
         </Link>
         <hr className="w-full border-1 border-t-gray-500/70" />

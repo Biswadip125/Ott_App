@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSearchMovieDetails } from "../redux/searchSlice";
 
 import MovieList from "./Movielist";
+import { setSearchPageContentType } from "../redux/movieSlice";
 
 const SearchMovie = () => {
   const [searchInputValue, setSearchInputValue] = useState("");
@@ -16,6 +17,12 @@ const SearchMovie = () => {
   const [searchMovieLoader, setSearchMovieloader] = useState(false);
 
   const [hasSearched, setHasSearched] = useState(false);
+  const [activeTab, setActiveTab] = useState("movie");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    dispatch(setSearchPageContentType(tab));
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -23,7 +30,7 @@ const SearchMovie = () => {
     setHasSearched(true);
     try {
       const res = await axios.get(
-        `${SEARCH_MOVIE_URL}${searchInputValue}&include_adult=false&language=en-US&page=1`,
+        `${SEARCH_MOVIE_URL}${activeTab}?query=${searchInputValue}&include_adult=false&language=en-US&page=1`,
         options
       );
 
@@ -41,7 +48,25 @@ const SearchMovie = () => {
 
   return (
     <>
-      <div className=" p-[7%] h-screen relative">
+      <div className=" pl-[7%] pr-[7%] pt-[15%] sm:pt-[10%] md:pt-[12%] lg:pt-[5%] h-screen relative">
+        <div className=" mb-5 flex items-center justify-center gap-5">
+          <button
+            className={`h-10 w-20 ${
+              activeTab === "movie" ? "bg-red-500" : "bg-gray-800"
+            } hover:bg-red-700 rounded-lg `}
+            onClick={() => handleTabClick("movie")}
+          >
+            Movies
+          </button>
+          <button
+            className={`h-10 w-24 ${
+              activeTab === "tv" ? "bg-red-500" : "bg-gray-800"
+            } rounded-lg hover:bg-red-700`}
+            onClick={() => handleTabClick("tv")}
+          >
+            TV Shows
+          </button>
+        </div>
         <form>
           <div className="flex items-center p-2 border border-gray-300 rounded-full bg-white md:mt-0 mt-8">
             <input
@@ -87,7 +112,9 @@ const SearchMovie = () => {
         ) : searchedMovies && searchedMovies.length > 0 ? (
           <MovieList movies={searchedMovies} />
         ) : hasSearched ? (
-          <p className="mt-2 ml-2 text-[20px]">No movies available</p>
+          <p className="mt-2 ml-2 text-[20px]">
+            No {activeTab === "movie" ? "Movies" : "Tv Shows"} available
+          </p>
         ) : (
           <p className="mt-9 ml-2 text-[20px] text-center">
             Nothing Searched Yet

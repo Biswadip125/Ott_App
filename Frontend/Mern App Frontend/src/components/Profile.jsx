@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import { useSelector } from "react-redux";
 import { BACKEND_IMAGE_URL } from "../utils/constant";
 import ProfileMenu from "./profileMenu";
+import Menu from "./Menu";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const user = useSelector((store) => store.app.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  });
 
   const profileMenuToggle = useSelector(
     (store) => store.movie.profileMenuToggle
   );
 
+  const menuToggle = useSelector((store) => store.movie.menuToggle);
+
   return (
     <>
       <Header />
       {profileMenuToggle && <ProfileMenu />}
+      {menuToggle && <Menu />}
 
       {user && (
-        <div className="w-full h-screen p-20 bg-black/90 text-white">
+        <div className="w-full h-screen pt-20 md:pl-20 md:pr-20 pl-10 pr-10 bg-black/90 text-white">
           <div className="p-4">
             <h1 className="text-3xl">User Details</h1>
             <hr className="w-full border-1 border-t-white-500" />
@@ -41,9 +53,9 @@ const Profile = () => {
             </div>
 
             {/*Email*/}
-            <div className=" name mt-4">
+            <div className=" email mt-4 ">
               <h2 className="text-2xl">Email</h2>
-              <h3 className="bg-gray-700  rounded-md mt-2 text-start px-3 h-[50px] py-3 font-bold text-xl">
+              <h3 className="bg-gray-700  rounded-md mt-2 text-start px-3 md:h-[50px] h-auto py-3 font-bold text-xl break-words">
                 {user.email}
               </h3>
             </div>

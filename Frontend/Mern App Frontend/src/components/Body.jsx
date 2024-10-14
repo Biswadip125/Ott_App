@@ -9,6 +9,8 @@ import Profile from "./Profile";
 import EditProfile from "./EditProfile";
 import Watch from "./Watch";
 import SearchContents from "./SearchContents";
+import TvShows from "./TvShows";
+import Watchlist from "./Watchlist";
 
 const Body = () => {
   const appRouter = createBrowserRouter([
@@ -33,12 +35,20 @@ const Body = () => {
       element: <EditProfile />,
     },
     {
-      path: `watch/:id`,
+      path: `watch/:contentType/:id`,
       element: <Watch />,
     },
     {
       path: "/search",
       element: <SearchContents />,
+    },
+    {
+      path: "/tvshows",
+      element: <TvShows />,
+    },
+    {
+      path: "/watchlist",
+      element: <Watchlist />,
     },
   ]);
   return (

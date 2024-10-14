@@ -12,7 +12,6 @@ const ProfileMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const setBackGroundColor = ["/search"];
 
   const profileMenuToggleHandler = () => {
     dispatch(setProfileMenuToggle());
@@ -39,7 +38,7 @@ const ProfileMenu = () => {
   return (
     <div
       className={`absolute h-30 w-40 right-[9%] top-[65px]  ${
-        setBackGroundColor.includes(location.pathname)
+        location.pathname === "/search" || location.pathname.includes("/watch")
           ? "bg-gray-600"
           : "bg-gray-600/70"
       } z-50   rounded-lg `}

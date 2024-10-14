@@ -5,6 +5,7 @@ import {
   MOVIE_DETAILS_URL,
   MOVIE_VIDEO_URL,
   options,
+  TV_SHOWS_VIDEO_URL,
 } from "../utils/constant";
 import axios from "axios";
 import Header from "./Header";
@@ -16,15 +17,20 @@ import { formatReleaseDate } from "../utils/dateFunction";
 import WatchSkeleton from "./WatchSkeleton";
 import { useSelector } from "react-redux";
 import Menu from "./Menu";
+import ProfileMenu from "./ProfileMenu";
 
 const Watch = () => {
   const { id } = useParams();
+  const { contentType } = useParams();
   const [trailers, setTrailers] = useState([]);
   const [currentTrailerIdx, setCurrentTrailerIdx] = useState(0);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState(null);
   const [similarContent, setSimilarContent] = useState(null);
 
+  const profileMenuToggle = useSelector(
+    (store) => store.movie.profileMenuToggle
+  );
   const menuToggle = useSelector((store) => store.movie.menuToggle);
 
   const increaseIndex = () => {
@@ -40,29 +46,51 @@ const Watch = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const getTrailers = async () => {
       try {
         const res = await axios.get(
-          `${MOVIE_VIDEO_URL}${id}/videos?language=en-US`,
+          `${
+            contentType === "movie" ? MOVIE_VIDEO_URL : TV_SHOWS_VIDEO_URL
+          }${id}/videos?language=en-US`,
           options
         );
         setTrailers(res.data.results);
       } catch (err) {
         console.log(err);
         setTrailers([]);
-      } finally {
-        setLoading(false);
       }
     };
-
     getTrailers();
   }, [id]);
 
   useEffect(() => {
+    setLoading(true);
+    const getSimilarContent = async () => {
+      try {
+        const res = await axios.get(
+          `${
+            contentType === "movie" ? MOVIE_DETAILS_URL : TV_SHOWS_VIDEO_URL
+          }${id}/similar?language=en-US`,
+          options
+        );
+        setSimilarContent(res.data.results);
+      } catch (err) {
+        console.log(err);
+        setSimilarContent([]);
+      }
+    };
+    getSimilarContent();
+  }, [id]);
+
+  useEffect(() => {
+    setLoading(true);
     const getMovieDetails = async () => {
       try {
         const res = await axios.get(
-          `${MOVIE_DETAILS_URL}${id}?language=en-US`,
+          `${
+            contentType === "movie" ? MOVIE_VIDEO_URL : TV_SHOWS_VIDEO_URL
+          }${id}?language=en-US`,
           options
         );
         setContent(res.data);
@@ -72,27 +100,7 @@ const Watch = () => {
         setLoading(false);
       }
     };
-
     getMovieDetails();
-  }, [id]);
-
-  useEffect(() => {
-    const getSimilarContent = async () => {
-      try {
-        const res = await axios.get(
-          `${MOVIE_DETAILS_URL}${id}/similar?language=en-US`,
-          options
-        );
-        setSimilarContent(res.data.results);
-      } catch (err) {
-        console.log(err);
-        setSimilarContent([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getSimilarContent();
   }, [id]);
 
   if (loading) {
@@ -119,7 +127,7 @@ const Watch = () => {
   return (
     <div className="bg-black h-auto w-full text-white relative">
       <Header />
-      <div className=" px-24 md:px-52 py-[85px] w-full h-full ">
+      <div className=" px-12 md:px-30 lg:px-52 py-[85px] w-full h-full ">
         {/*Video Player */}
 
         {trailers.length > 0 && (
@@ -134,25 +142,30 @@ const Watch = () => {
         {trailers.length === 0 && (
           <h2 className="text-xl text-center mt-5">
             No trailers available for{" "}
-            <span className="font-bold text-red-600">{content?.title}</span>
+            <span className="font-bold text-red-600">
+              {content?.title || content?.original_name}
+            </span>
           </h2>
         )}
 
         {/*Movie Details*/}
-        <div className="flex flex-col mt-32 md:flex-row gap-20 items-center justify-between">
+        <div className="flex flex-col mt-32 lg:flex-row gap-20 items-center justify-between">
           <div>
             <h2 className="text-5xl text-white font-bold text-balance">
-              {content?.title}
+              {content?.title || content?.original_name}
             </h2>
             <p className="mt-2 text-lg">
-              {formatReleaseDate(content?.release_date)} |{" "}
+              {formatReleaseDate(
+                content?.release_date || content?.first_air_date
+              )}{" "}
+              |{" "}
               {content?.adult ? (
-                <span className="text-red-600">!8+</span>
+                <span className="text-red-600">18+</span>
               ) : (
                 <span className="text-green-600">PG-13</span>
               )}{" "}
             </p>
-            <p className="mt-2 text-lg">{content?.overview}</p>
+            <p className="mt-2 text-lg ">{content?.overview}</p>
           </div>
           <img
             className="max-h-[600px] rounded-md"
@@ -163,15 +176,22 @@ const Watch = () => {
         {/*Similar Content Slider*/}
         <div className=" mt-5">
           {similarContent?.length > 0 && (
-            <MovieList title={"Similar Movies"} movies={similarContent} />
+            <MovieList
+              title={
+                location.pathname.includes("/movies")
+                  ? "Similar Movies"
+                  : "Similar TvShows"
+              }
+              movies={similarContent}
+            />
           )}
         </div>
       </div>
 
       {/*Navigation  Buttons*/}
-      <div className="absolute top-32 flex justify-between w-full px-28">
+      <div className="absolute top-32 flex justify-between w-full lg:px-28 px-1">
         <button
-          className={`w-11 h-11 bg-gray-500/70 hover:bg-gray-500 rounded-full flex items-center justify-center  ${
+          className={`lg:w-11 lg:h-11 md:h-9 md:w-9 h-8 w-8 bg-gray-500/70 hover:bg-gray-500 rounded-full flex items-center justify-center  ${
             currentTrailerIdx === 0
               ? "opacity-50 cursor-not-allowed "
               : "cursor-pointer"
@@ -179,10 +199,10 @@ const Watch = () => {
           disabled={currentTrailerIdx === 0}
           onClick={decreaseIndex}
         >
-          <GrPrevious size={20} />
+          <GrPrevious className="lg:w-[20px] md:w-[17px] w-[15px] lg:h-[20px] md:h-[17px] h-[15px]" />
         </button>
         <button
-          className={`w-11 h-11 bg-gray-500/70 hover:bg-gray-500 rounded-full flex items-center justify-center ${
+          className={`lg:w-11 lg:h-11 md:h-9 md:w-9 h-8 w-8 bg-gray-500/70 hover:bg-gray-500 rounded-full flex items-center justify-center ${
             currentTrailerIdx === trailers.length - 1
               ? "opacity-50 cursor-not-allowed "
               : "cursor-pointer"
@@ -190,10 +210,11 @@ const Watch = () => {
           disabled={currentTrailerIdx === trailers.length - 1}
           onClick={increaseIndex}
         >
-          <GrNext size={20} />
+          <GrNext className="lg:w-[20px] md:w-[17px] w-[15px] lg:h-[20px] md:h-[17px] h-[15px]" />
         </button>
       </div>
       {menuToggle && <Menu />}
+      {profileMenuToggle && <ProfileMenu />}
     </div>
   );
 };

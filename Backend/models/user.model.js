@@ -19,7 +19,14 @@ const userSchema = mongoose.Schema({
   },
   watchlist: [
     {
-      type: Number,
+      id: {
+        type: Number,
+        required: true,
+      },
+      contentType: {
+        type: String,
+        required: true,
+      },
     },
   ],
 });

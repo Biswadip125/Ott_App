@@ -7,10 +7,17 @@ const movieSlice = createSlice({
     popularMovies: null,
     topRatedMovies: null,
     upcomingMovies: null,
+    airingTodayTvShows: null,
+    onTheAirTvShows: null,
+    popularTvShows: null,
+    topRatedTvShows: null,
     backdropImages: null,
     profileMenuToggle: false,
     watchlist: [],
+    moviesList: [],
+    tvShowsList: [],
     menuToggle: false,
+    searchPageContentType: null,
   },
   reducers: {
     //action
@@ -29,14 +36,35 @@ const movieSlice = createSlice({
     getBackdropImages: (state, action) => {
       state.backdropImages = action.payload;
     },
+    getAiringTodayTvShows: (state, action) => {
+      state.airingTodayTvShows = action.payload;
+    },
+    getOnTheAirTvShows: (state, action) => {
+      state.onTheAirTvShows = action.payload;
+    },
+    getPopularTvShows: (state, action) => {
+      state.popularTvShows = action.payload;
+    },
+    getTopRatedTvShows: (state, action) => {
+      state.topRatedTvShows = action.payload;
+    },
     setProfileMenuToggle: (state) => {
       state.profileMenuToggle = !state.profileMenuToggle;
     },
     setWatchlist: (state, action) => {
-      state.watchlist = [...action.payload];
+      state.watchlist = action.payload;
     },
     setMenuToggle: (state) => {
       state.menuToggle = !state.menuToggle;
+    },
+    setMoviesList: (state, action) => {
+      state.moviesList = action.payload;
+    },
+    setTvShowsList: (state, action) => {
+      state.tvShowsList = action.payload;
+    },
+    setSearchPageContentType: (state, action) => {
+      state.searchPageContentType = action.payload;
     },
   },
 });
@@ -46,10 +74,17 @@ export const {
   getPopularMovies,
   getTopRatedMovies,
   getUpcomingMovies,
+  getAiringTodayTvShows,
+  getOnTheAirTvShows,
+  getPopularTvShows,
+  getTopRatedTvShows,
   getBackdropImages,
   setProfileMenuToggle,
   setWatchlist,
   setMenuToggle,
+  setMoviesList,
+  setTvShowsList,
+  setSearchPageContentType,
 } = movieSlice.actions;
 
 export default movieSlice.reducer;

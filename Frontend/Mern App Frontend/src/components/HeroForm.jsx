@@ -42,7 +42,7 @@ const HeroForm = ({ isLogin, link, apiLink, navigateLink }) => {
   return (
     <>
       <div className="min-h-screen flex flex-col items-center justify-center bg-[url('https://gtwallpaper.org/sites/default/files/wallpaper/246844/netflix-background-246844-2224740-3441109.png')] ">
-        <div className="bg-black p-8 rounded-lg shadow-lg w-96 opacity-80 ">
+        <div className="bg-black p-8 rounded-lg shadow-lg md:w-96 w-80 opacity-80 ">
           <h2 className="text-3xl font-semibold mb-4 text-center text-white">
             {isLogin ? "Sign In" : "Sign Up"}
           </h2>
