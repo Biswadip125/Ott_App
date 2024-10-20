@@ -9,8 +9,7 @@ import {
 } from "../utils/constant";
 
 import { setMoviesList, setTvShowsList } from "../redux/movieSlice";
-import MovieCard from "./MovieCard";
-import MovieList from "./Movielist";
+import MovieList from "./MovieList";
 import ProfileMenu from "./ProfileMenu";
 import Menu from "./Menu";
 
@@ -100,7 +99,7 @@ const Watchlist = () => {
   }, [tvShowsInWatchlist, dispatch]); // Depend only on tvShowsInWatchlist and dispatch
 
   return (
-    <div className="w-full h-screen bg-black text-white">
+    <div className="w-full lg:h-auto h-screen bg-black text-white">
       <Header />
       {profileMenuToggle && <ProfileMenu />}
       {menuToggle && <Menu />}

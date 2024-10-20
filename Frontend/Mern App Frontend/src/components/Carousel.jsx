@@ -4,7 +4,6 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import { BACKDROP_IMAGE_URL } from "../utils/constant";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Header from "./Header";
 
 const Carousel = ({ interval }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

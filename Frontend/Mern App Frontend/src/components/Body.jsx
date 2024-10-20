@@ -3,8 +3,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Browse from "./Browse";
 import Login from "./Login";
 import Register from "./Register";
-import SearchMovie from "./SearchMovie";
-import Header from "./Header";
 import Profile from "./Profile";
 import EditProfile from "./EditProfile";
 import Watch from "./Watch";
