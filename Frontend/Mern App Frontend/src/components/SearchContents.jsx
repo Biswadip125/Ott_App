@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import SearchMovie from "./SearchMovie";
 import { useSelector } from "react-redux";
-import ProfileMenu from "./profileMenu";
+import ProfileMenu from "./ProfileMenu";
 import Menu from "./Menu";
 
 const SearchContents = () => {

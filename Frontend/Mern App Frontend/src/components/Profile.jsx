@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Header from "./Header";
 import { useSelector } from "react-redux";
 import { BACKEND_IMAGE_URL } from "../utils/constant";
-import ProfileMenu from "./profileMenu";
+import ProfileMenu from "./ProfileMenu";
 import Menu from "./Menu";
 import { useNavigate } from "react-router-dom";
 
