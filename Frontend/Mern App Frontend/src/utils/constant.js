@@ -1,4 +1,4 @@
-export const API_END_POINT = "https://ott-app-api.vercel.app";
+export const API_END_POINT = "https://ott-app-api.vercel.app/api/v1/users";
 
 export const options = {
   method: "GET",
