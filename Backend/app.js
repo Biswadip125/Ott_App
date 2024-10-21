@@ -46,10 +46,12 @@ app.use(function (req, res, next) {
 //     origin: "*",
 //   })
 // );
-
+app.get("/", (req, res) => {
+  res.send("hello");
+});
 app.use("/api/v1", indexRouter);
 app.use("/api/v1/users", usersRouter);
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("server is running http://localhost:3000/api/v1");
 });
