@@ -36,7 +36,7 @@ export const TV_SHOWS_BACKDROP_IMAGE =
 
 export const BACKDROP_IMAGE_URL = "https://image.tmdb.org/t/p/original";
 
-export const BACKEND_IMAGE_URL = "http://localhost:3000/images";
+export const BACKEND_IMAGE_URL = "https://ott-app-api.vercel.app/images";
 
 export const SEARCH_MOVIE_URL = "https://api.themoviedb.org/3/search/";
 
