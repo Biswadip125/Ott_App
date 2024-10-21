@@ -139,6 +139,7 @@ router.post("/deletefromwatchlist", isLoggedIn, async (req, res) => {
 });
 
 router.get("/watchlist", isLoggedIn, async (req, res) => {
+  console.log("watchlist entered")
   try {
     const user = await userModel.findOne({ email: req.user.email });
 
