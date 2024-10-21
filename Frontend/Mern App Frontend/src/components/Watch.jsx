@@ -12,7 +12,7 @@ import Header from "./Header";
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
 import ReactPlayer from "react-player";
-import MovieList from "./Movielist";
+import MovieList from "./MovieList";
 import { formatReleaseDate } from "../utils/dateFunction";
 import WatchSkeleton from "./WatchSkeleton";
 import { useSelector } from "react-redux";
