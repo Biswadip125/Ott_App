@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import MovieList from "./MovielList";
+import MovieList from "./MovieList";
 
 const TvShowsContainer = () => {
   const movie = useSelector((store) => store.movie);
