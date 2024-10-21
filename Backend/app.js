@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
   );
   res.header(
     "Access-Control-Allow-Headers",
-    "X_Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+    "Origin, X_Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
   );
   next();
 });
