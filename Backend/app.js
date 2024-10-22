@@ -27,7 +27,7 @@ app.use(cookieParser());
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Origin", "https://ott-kiz45x4s7-biswadip125s-projects.vercel.app/");
+  res.header("Access-Control-Allow-Origin", "https://ott-app-hazel.vercel.app");
   res.header(
     "Access-Control-Allow-Methods",
     "GET, PUT, POST, DELETE, UPDATE, OPTIONS "
