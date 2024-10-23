@@ -99,7 +99,13 @@ const Watchlist = () => {
   }, [tvShowsInWatchlist, dispatch]); // Depend only on tvShowsInWatchlist and dispatch
 
   return (
-    <div className="w-full lg:h-auto h-screen bg-black text-white">
+    <div
+      className={`w-full ${
+        moviesInWatchlist.length > 0 && tvShowsInWatchlist.length > 0
+          ? "lg:h-auto"
+          : "lg:h-screen"
+      } h-screen bg-black text-white`}
+    >
       <Header />
       {profileMenuToggle && <ProfileMenu />}
       {menuToggle && <Menu />}

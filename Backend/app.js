@@ -34,7 +34,7 @@ app.use(function (req, res, next) {
   );
   res.header(
     "Access-Control-Allow-Headers",
-    "X_Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+    "Origin, X_Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization"
   );
   next();
 });
@@ -47,9 +47,12 @@ app.use(function (req, res, next) {
 //   })
 // );
 
+app.get("/", (req, res) => {
+  res.send("hello");
+});
 app.use("/api/v1", indexRouter);
 app.use("/api/v1/users", usersRouter);
 
-app.listen(3000, () => {
-  console.log("server is running http://localhost:3000/api/v1");
+app.listen(process.env.PORT, () => {
+  console.log("server is running");
 });
