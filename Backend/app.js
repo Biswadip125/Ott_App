@@ -53,5 +53,5 @@ app.use("/api/v1", indexRouter);
 app.use("/api/v1/users", usersRouter);
 
 app.listen(process.env.PORT, () => {
-  console.log("server is running http://localhost:3000/api/v1");
+  console.log("server is running ");
 });
