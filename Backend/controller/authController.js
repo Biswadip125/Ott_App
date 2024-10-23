@@ -27,7 +27,11 @@ module.exports.registerUser = async (req, res) => {
           password: hash,
         });
         let token = generateToken(user);
-        res.cookie("token", token);
+        res.cookie("token", token, {
+  httpOnly: true,     
+  secure: true,       
+  sameSite: 'none',   
+});
         return res
           .status(201)
           .json({ message: "Registration successful", success: true });
@@ -70,7 +74,11 @@ module.exports.loginUser = async (req, res) => {
         });
       }
       let token = generateToken(user);
-      res.cookie("token", token);
+      res.cookie("token", token, {
+  httpOnly: true,     
+  secure: true,       
+  sameSite: 'none',  
+});
       res.status(201).json({
         message: `Welcome Back ${user.fullname}`,
         user,
